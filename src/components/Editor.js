@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Previewer from './Previewer';
-import ToolBar from './ToolBar'
+
 
 const placeholder = `# Welcome to my React Markdown Previewer!
 
@@ -62,7 +62,8 @@ export default class Editor extends Component {
             previewMax: false
         }
         this.handleClick = this.handleClick.bind(this);
-        this.toggleFullWidth = this.toggleFullWidth.bind(this);
+        this.toggleEditorFullWidth = this.toggleEditorFullWidth.bind(this);
+        this.togglePrewiewFullWidth = this.togglePrewiewFullWidth.bind(this);
     }
 
     handleClick(e) {
@@ -71,32 +72,37 @@ export default class Editor extends Component {
         localStorage.setItem('markdown', this.state.markdown)
     };
 
-    toggleFullWidth() {
-        this.setState(pre => ({previewMax: !pre.previewMax}))
+    togglePrewiewFullWidth() {
+        this.setState(pre => ({ previewMax: !pre.previewMax }))
         console.log(this.state.previewMax)
+    }
+    toggleEditorFullWidth() {
+        this.setState(pre => ({ editorMax: !pre.editorMax }))
     }
 
     render() {
-        const sytle = {
-
-        }
+        const classname = this.state.editorMax ? 'full-editor-width' : 'editor-container';
         return (
             <div>
-                <Paper className='editor-container'>
-                    <ToolBar fullWidth={this.state.previewMax} customClickEvent={() => this.toggleFullWidth()}/>
+                <Paper className={classname} id='editor-container'>
+                  
+
+                    <div onClick={() => this.toggleEditorFullWidth()} style={{color: '#a6e22e'}}>
+                        {this.state.editorMax ? "original size" : "Full width"}
+                    </div>
                     <TextField
                         id="editor"
                         label="Editor"
                         onChange={e => this.handleClick(e)}
                         multiline
-                        rows="10"
+                        rows={this.state.editorMax ? "30" : "10"}
                         value={this.state.markdown}
                         variant="outlined"
                         fullWidth={true}
                     />
                 </Paper>
 
-                <Paper>
+                <Paper >
                     <Previewer
                         markdown={this.state.markdown}
                         fullWidth={this.state.previewMax}

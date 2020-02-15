@@ -1,15 +1,24 @@
-.editor-container {
-  max-width: 40rem;
+#editor-container{
   padding: 1rem;
   margin: 0 auto;
+  
   div {
     text-align: right;
     padding: 5px;
     cursor: pointer;
-    
   }
 }
+
 #preview {
   padding: 2rem;
   margin-top: 1rem;
+}
+
+.full-editor-width {
+  width: 90% !important;
+  height: 80%;
+}
+.editor-container {
+  max-width: 40rem;
+  
 }
